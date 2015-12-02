@@ -5,11 +5,11 @@ std::pair<int, t_points> closestPairBrute(const std::vector<Point>& points) {
 	if (points.size() < 2) {
 		return { -1, {{0,0},{0,0}} };
 	} else {
-		auto minDist = abs(distBetween(points[0], points[1]));	// Set initial minimum distance
+		int minDist = abs(distBetween(points[0], points[1]));	// Set initial minimum distance
 		t_points minPoints = { points[0],points[1] };	// Set initial closest points
 		for (size_t i = 0; i < points.size() - 1; i++) {
 			for (size_t j = i + 1; j < points.size(); j++) {
-				auto dist = abs(distBetween(points[i], points[j])); // Compair two new points
+				int dist = abs(distBetween(points[i], points[j])); // Compair two new points
 				if ( dist < minDist) {	// Check if closer
 					minDist = dist;		// Establish new closest distance
 					minPoints = { points[i],points[j] };	// and two new points

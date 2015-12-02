@@ -3,82 +3,125 @@
 #include <iostream>
 #include "closestPair.h"
 
-std::pair<int, t_points> closestPairOptimized(const std::vector<Point>& xPoints, const std::vector<Point>& yPoints) {
-	int N = xPoints.size();
-	if (N <= 3) {
-		return closestPairBrute(xPoints);
-	}
+std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY) {
+	std::vector< std::vector<Point> > partPoints;
+	std::vector<Point> pointsL, pointsR, pointsXL, pointsXR, pointsYL, pointsYR, strip;
+	int mid;
 
-	// Set middle line
-	int xM = xPoints.at(N / 2).x;
-
-	// Setup seperation of points
-	std::vector<Point> xL = std::vector<Point>();
-	std::vector<Point> yL = std::vector<Point>();
-	std::vector<Point> xR = std::vector<Point>();
-	std::vector<Point> yR = std::vector<Point>();
-	std::copy(std::begin(xPoints), std::begin(xPoints) + (N / 2), std::back_inserter(xL));
-	std::copy(std::begin(xPoints) + (N / 2), std::end(xPoints), std::back_inserter(xR));
-	std::copy_if(std::begin(yPoints), std::end(yPoints), std::back_inserter(yL), [&xM](const Point& p) {
-		return p.x <= xM;
-	});
-	std::copy_if(std::begin(yPoints), std::end(yPoints), std::back_inserter(yR), [&xM](const Point& p) {
-		return p.x > xM;
-	});
-
-	// Get closest pair from both sides of the middle line (xM)
-	std::pair<int, t_points> p1 = closestPairOptimized(xL, yL);
-	std::pair<int, t_points> p2 = closestPairOptimized(xR, xR);
-
-	// Check smaller of the two
-	std::pair<int, t_points> min = (p1.first <= p2.first) ? p1 : p2;
-
-	// 
-	std::vector<Point> ySmall = std::vector<Point>();
-	std::copy_if(std::begin(yPoints), std::end(yPoints), std::back_inserter(ySmall), [&min, &xM](const Point& p) {
-		return std::abs(xM - p.x) < min.first;
-	});
-
-	for (Point& i:ySmall) {
-		std::cout << "\n" << i.x << ',' << i.y;
-	}
-	return min;
-}
-
-std::pair<int, t_points> closestPairDivCon(const std::vector<Point> points, int n) {
-	if (n <= 3) {
+	if (points.size() <= 3) {
 		return closestPairBrute(points);
-	}
+	} else {
+		// Get mid line
+		mid = pointsX[pointsX.size() / 2].x;
 
-	// Find the middle Point
-	int mid = n / 2;
-	Point midPoint = points[mid];
+		// Partition all points
+		partPoints = partition(points, mid);
+		pointsL = partPoints[0];
+		pointsR = partPoints[1];
 
-	std::pair<int, t_points> distL = closestPairDivCon(points, mid);
-	std::pair<int, t_points> distR = closestPairDivCon(points, n - mid);
+		// Partition X sorted Points
+		partPoints = partition(pointsX, mid);
+		pointsXL = partPoints[0];
+		pointsXR = partPoints[1];
 
-	int dist = std::min(distL.second.first.x, distR.second.first.x);
+		// Partition Y sorted Points
+		partPoints = partition(pointsY, mid);
+		pointsYL = partPoints[0];
+		pointsYR = partPoints[1];
 
-	std::vector<Point> strip;
-	int size = 0;
-	for (int i = 0; i < n; i++) {
-		if (abs(points[i].x - midPoint.x) < dist) {
-			strip.push_back(points[i]);
-			size++;
+		// Setup distances
+		int dist;
+		auto dist1 = closestPairDivCon(pointsL, pointsXL, pointsYL);
+		auto dist2 = closestPairDivCon(pointsR, pointsXR, pointsYR);
+		Point pnt1, pnt2;
+
+		// get smaller distance
+		if (dist1.first < dist2.first) {
+			dist = dist1.first;
+			pnt1 = dist1.second.first;
+			pnt2 = dist1.second.second;
+		} else {
+			dist = dist2.first;
+			pnt1 = dist2.second.first;
+			pnt2 = dist2.second.second;
 		}
-	}
-	std::sort(points.begin(), points.end(), compareY);
 
-	t_points result;
-	for (int i = 0; i < size; i++) {
-		for (int j = i + 1; j < size && (strip[j].y - strip[i].y) < dist; j++) {
-			int distchk = distBetween(strip[i], strip[j]);
-			if (distchk < dist) {
-				dist = distchk;
-				result.first = strip[i];
-				result.second = strip[j];
+		// Populate the strip vector
+		for (size_t i = 0; i < pointsY.size(); i++) {
+			if (pointsY[i].x >= mid - dist && pointsY[i].x <= mid + dist) {
+				strip.push_back(pointsY[i]);
 			}
 		}
+
+		//for (int i = 0; i < strip.size(); i++) {
+		//	std::cout << strip[i].x << "," << strip[i].y << "\n";
+		//}
+
+		// compare all the strip
+		for (size_t i = 0; i < strip.size(); i++) {
+			//for (size_t j = 0; j < strip.size(); j++) {
+			for (size_t j = i + 1; j < strip.size(); j++) {
+				//if (j != i) {
+				dist1.first = distBetween(strip[i], strip[j]);
+				if (dist1.first < dist) {
+					dist = dist1.first;
+					pnt1 = dist1.second.first;
+					pnt2 = dist1.second.second;
+				}
+				//}
+			}
+		}
+
+		std::cout << dist << "\n";
+		return{ dist,{ {pnt1},{pnt2} } };
 	}
-	return { dist, result };
+
 }
+
+//std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, int n) {
+//	if (n <= 3) {
+//		return closestPairBrute(points);
+//	} else {
+//
+//		// Find the middle Point
+//		int mid = n / 2;
+//		Point midPoint = points[mid];
+//
+//		std::pair<int, t_points> distL = closestPairDivCon(points, mid);
+//		std::pair<int, t_points> distR = closestPairDivCon(points[mid], n - mid);
+//
+//		int dist = std::min(distL.second.first.x, distR.second.first.x);
+//
+//		std::cout << "dist: " << dist << "\n" << "mid: " << mid << "\nmidPoint :" << midPoint.x << "," << midPoint.y << "\n";
+//
+//		std::vector<Point> strip;
+//		int size = 0;
+//		for (int i = 0; i < n; i++) {
+//			if (abs(points[i].x - midPoint.x) < dist) {
+//				//std::cout << "point: " << points[i].x << "," << points[i].y << "\n";
+//				strip.push_back(points[i]);
+//				size++;
+//			}
+//		}
+//		std::sort(points.begin(), points.end(), compareY);
+//
+//		////check array input
+//		//for (int i = 0; i < strip.size(); i++) {
+//		//	std::cout << "(" << strip[i].x << "," << strip[i].y << "), ";
+//		//}
+//
+//		t_points result = { {99999999,99999999}, {99999999,99999999} };
+//		for (int i = 0; i < size; i++) {
+//			for (int j = i + 1; j < size && (strip[j].y - strip[i].y) < dist; j++) {
+//				int distchk = distBetween(strip[i], strip[j]);
+//				if (distchk < dist) {
+//					dist = distchk;
+//					result.first = strip[i];
+//					result.second = strip[j];
+//				}
+//			}
+//		}
+//		return{ dist, result };
+//	}
+//}
+
