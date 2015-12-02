@@ -3,7 +3,7 @@
 #include <iostream>
 #include "closestPair.h"
 
-std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY) {
+std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY) {
 	std::vector< std::vector<Point> > partPoints;
 	std::vector<Point> pointsL, pointsR, pointsXL, pointsXR, pointsYL, pointsYR, strip;
 	int mid;
@@ -30,7 +30,7 @@ std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, std::vecto
 		pointsYR = partPoints[1];
 
 		// Setup distances
-		int dist;
+		double dist;
 		auto dist1 = closestPairDivCon(pointsL, pointsXL, pointsYL);
 		auto dist2 = closestPairDivCon(pointsR, pointsXR, pointsYR);
 		Point pnt1, pnt2;
@@ -53,26 +53,18 @@ std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, std::vecto
 			}
 		}
 
-		//for (int i = 0; i < strip.size(); i++) {
-		//	std::cout << strip[i].x << "," << strip[i].y << "\n";
-		//}
-
 		// compare all the strip
 		for (size_t i = 0; i < strip.size(); i++) {
-			//for (size_t j = 0; j < strip.size(); j++) {
 			for (size_t j = i + 1; j < strip.size(); j++) {
-				//if (j != i) {
-				dist1.first = distBetween(strip[i], strip[j]);
+				dist1 = distBetween(strip[i], strip[j]);
 				if (dist1.first < dist) {
 					dist = dist1.first;
 					pnt1 = dist1.second.first;
 					pnt2 = dist1.second.second;
 				}
-				//}
 			}
 		}
 
-		std::cout << dist << "\n";
 		return{ dist,{ {pnt1},{pnt2} } };
 	}
 

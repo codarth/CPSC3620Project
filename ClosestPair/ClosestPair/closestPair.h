@@ -15,11 +15,11 @@ public:
 //const int COUNT = 10;
 typedef std::pair<Point, Point> t_points;	// so we can use a pair of points
 
-std::pair<int, t_points> closestPairBrute(const std::vector<Point>& points);
-int distBetween(const Point& a, const Point& b);
+std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points);
+std::pair<double, t_points> distBetween(const Point& a, const Point& b);
 //std::pair<int, t_points> closestPairOptimized(const std::vector<Point>& xPoints, const std::vector<Point>& yPoints);
 
-std::pair<int, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
+std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
 
 inline std::vector< std::vector<Point> > partition(std::vector<Point> points, int mid) {
 	std::vector< std::vector<Point> > partPoints;
