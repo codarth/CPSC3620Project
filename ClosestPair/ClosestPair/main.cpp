@@ -7,10 +7,10 @@
 #include "closestPair.h"
 
 int main() {
-	const int SIZE = 1000;
+	const int SIZE =6000;
 	// Input File to the points
 	std::ifstream inFile;
-	inFile.open("output1000.txt");
+	inFile.open("output6000.txt");
 	if (!inFile.is_open()) {	// error checking
 		std::cout << "failed to open file\n";
 	}

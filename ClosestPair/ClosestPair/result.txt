@@ -1,18 +1,72 @@
-Point count: 4000
-Minimum Distance brute: 217.007
-point 1: 788061,-853658, point 2: 788265,-853584
-Running time: 10.403 seconds
-
-
 Point count: 1000
 Minimum Distance brute: 348.633
 point 1: -754123,-857938, point 2: -753910,-857662
-Running time: 0.643 seconds
+Running time: 0.637 seconds
 
 
 Point count: 1000
 Minimum Distance Div&Con: 348.633
 point 1: -754123,-857938, point 2: -753910,-857662
-Running time: 16.853 seconds
+Running time: 0.179 seconds
+
+
+Point count: 2000
+Minimum Distance brute: 627.348
+point 1: -719749,167627, point 2: -719296,168061
+Running time: 2.526 seconds
+
+
+Point count: 2000
+Minimum Distance Div&Con: 627.348
+point 1: -719749,167627, point 2: -719296,168061
+Running time: 0.395 seconds
+
+
+Point count: 3000
+Minimum Distance brute: 995.621
+point 1: -370558,-746144, point 2: -371539,-746314
+Running time: 5.716 seconds
+
+
+Point count: 3000
+Minimum Distance Div&Con: 995.621
+point 1: -371539,-746314, point 2: -370558,-746144
+Running time: 0.539 seconds
+
+
+Point count: 4000
+Minimum Distance brute: 941.608
+point 1: 730285,-786524, point 2: 731172,-786208
+Running time: 10.234 seconds
+
+
+Point count: 4000
+Minimum Distance Div&Con: -1
+point 1: 0,0, point 2: 0,0
+Running time: 0.849 seconds
+
+
+Point count: 5000
+Minimum Distance brute: 321.16
+point 1: -871307,400677, point 2: -871169,400387
+Running time: 15.754 seconds
+
+
+Point count: 5000
+Minimum Distance Div&Con: -1
+point 1: 0,0, point 2: 0,0
+Running time: 1.018 seconds
+
+
+Point count: 6000
+Minimum Distance brute: 168.36
+point 1: -570169,-591752, point 2: -570028,-591660
+Running time: 22.861 seconds
+
+
+Point count: 6000
+Minimum Distance Div&Con: 168.36
+point 1: -570169,-591752, point 2: -570028,-591660
+Running time: 1.149 seconds
 
 
