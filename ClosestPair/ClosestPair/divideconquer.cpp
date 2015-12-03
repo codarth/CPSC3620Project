@@ -1,6 +1,3 @@
-#include <iterator>
-#include <algorithm>
-#include <iostream>
 #include "closestPair.h"
 
 std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY) {

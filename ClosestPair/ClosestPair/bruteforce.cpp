@@ -18,7 +18,8 @@ std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points) {
 	}
 }
 
+// Get distance Between the two given points
 std::pair<double, t_points> distBetween(const Point& a, const Point& b) { // Calculate distance between two points
 	return{ abs(sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2))), 
-	{ {a}, {b} } };
+	{ {a}, {b} } }; // Returns distance between and the two points
 }

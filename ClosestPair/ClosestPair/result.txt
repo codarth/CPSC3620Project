@@ -1,0 +1,12 @@
+Point count: 4000
+Minimum Distance brute: 217.007
+point 1: 788061,-853658, point 2: 788265,-853584
+Running time: 10.021 seconds
+
+
+Point count: 4000
+Minimum Distance Div&Con: -1
+point 1: 0,0, point 2: 0,0
+Running time: 1.613 seconds
+
+

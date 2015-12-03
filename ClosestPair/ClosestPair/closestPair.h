@@ -1,26 +1,26 @@
 #pragma once
-
 #include <vector>
+#include <time.h>
+#include <fstream>
+#include <iostream>
 
 class Point {
 public:
 	Point() {};
 	Point(int X, int Y) {
-		x = X;
-		y = Y;
+		x = X;	y = Y;
 	}
 	int x, y;
 };
 
-//const int COUNT = 10;
 typedef std::pair<Point, Point> t_points;	// so we can use a pair of points
 
+// Forward decleration
 std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points);
-std::pair<double, t_points> distBetween(const Point& a, const Point& b);
-//std::pair<int, t_points> closestPairOptimized(const std::vector<Point>& xPoints, const std::vector<Point>& yPoints);
-
 std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
+std::pair<double, t_points> distBetween(const Point& a, const Point& b);
 
+// Partition for divide and conquer
 inline std::vector< std::vector<Point> > partition(std::vector<Point> points, int mid) {
 	std::vector< std::vector<Point> > partPoints;
 	std::vector<Point> temp1;
@@ -40,11 +40,32 @@ inline std::vector< std::vector<Point> > partition(std::vector<Point> points, in
 	return partPoints;
 }
 
+// Needed for sorting for X
 inline bool compareX(const Point& a, const Point& b) {
 	return (a.x < b.x);
 }
-
+// Needed for sorting for Y
 inline bool compareY(const Point& a, const Point& b) {
 	return (a.y < b.y);
 }
 
+// write results to file
+inline void clockWrite(clock_t start, 
+	clock_t end, 
+	std::pair<double, 
+	t_points> pair, 
+	std::string algo,
+	int SIZE) {
+
+	std::ofstream outFile;
+	outFile.open("result.txt",std::ios::app);
+	if (!outFile.is_open()) {	// error checking
+		std::cout << "failed to open file\n";
+	}
+
+	outFile << "Point count: " << SIZE << "\n"
+		<< "Minimum Distance " << algo.c_str() << ": " << pair.first << "\n"	// Output brute force result
+		<< "point 1: " << pair.second.first.x << "," << pair.second.first.y << ", "
+		<< "point 2: " << pair.second.second.x << "," << pair.second.second.y << "\n"
+		<< "Running time: " << ((double)end - (double)start)/ CLOCKS_PER_SEC<<" seconds" << "\n\n\n";
+}
