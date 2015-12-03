@@ -7,10 +7,10 @@
 #include "closestPair.h"
 
 int main() {
-	const int SIZE = 4000;
+	const int SIZE = 1000;
 	// Input File to the points
 	std::ifstream inFile;
-	inFile.open("output4000.txt");
+	inFile.open("output1000.txt");
 	if (!inFile.is_open()) {	// error checking
 		std::cout << "failed to open file\n";
 	}
@@ -48,7 +48,8 @@ int main() {
 	dcStart = clock();
 
 	// Use divide and conquer to calculate closest pair, and output
-	auto divCon = closestPairDivCon(points, pointsX, pointsY);
+	//auto divCon = closestPairDivCon(points, pointsX, pointsY);
+	auto divCon = closestPairDivCon(pointsX);
 	std::cout << "Minimum Distance Div&Con: " << divCon.first << "\n"
 		<< "point 1: " << divCon.second.first.x << "," << divCon.second.first.y << ", "
 		<< "point 2: " << divCon.second.second.x << "," << divCon.second.second.y << "\n";

@@ -17,7 +17,8 @@ typedef std::pair<Point, Point> t_points;	// so we can use a pair of points
 
 // Forward decleration
 std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points);
-std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
+//std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
+std::pair<double, t_points> closestPairDivCon(std::vector<Point> points);
 std::pair<double, t_points> distBetween(const Point& a, const Point& b);
 
 // Partition for divide and conquer
