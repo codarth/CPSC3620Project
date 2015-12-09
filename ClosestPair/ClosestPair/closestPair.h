@@ -23,26 +23,6 @@ std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points);
 std::pair<double, t_points> closestPairDivCon(std::vector<Point> points);
 std::pair<double, t_points> distBetween(const Point& a, const Point& b);
 
-// Partition for divide and conquer
-inline std::vector< std::vector<Point> > partition(std::vector<Point> points, int mid) {
-	std::vector< std::vector<Point> > partPoints;
-	std::vector<Point> temp1;
-	std::vector<Point> temp2;
-
-	for (size_t i = 0; i < points.size(); i++) {
-		if (points[i].x <= mid) {
-			temp1.push_back(points[i]);
-		} else {
-			temp2.push_back(points[i]);
-		}
-	}
-
-	partPoints.push_back(temp1);
-	partPoints.push_back(temp2);
-
-	return partPoints;
-}
-
 // Needed for sorting for X
 inline bool compareX(const Point& a, const Point& b) {
 	return (a.x < b.x);
