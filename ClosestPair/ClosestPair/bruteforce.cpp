@@ -3,7 +3,7 @@
 std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points) {
 	// Check if there is at least 2 points
 	if (points.size() < 2) {
-		return { -1, {{0,0},{0,0}} };
+		return { 999999, {{0,0},{0,0}} };
 	} else {
 		std::pair<double, t_points> minDist = distBetween(points[0], points[1]);	// Set initial minimum distance
 		for (size_t i = 0; i < points.size() - 1; i++) {
@@ -20,6 +20,6 @@ std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points) {
 
 // Get distance Between the two given points
 std::pair<double, t_points> distBetween(const Point& a, const Point& b) { // Calculate distance between two points
-	return{ abs(sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2))), 
+	return{ std::abs(sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2))), 
 	{ {a}, {b} } }; // Returns distance between and the two points
 }

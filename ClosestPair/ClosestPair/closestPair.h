@@ -1,8 +1,11 @@
-#pragma once
+#ifndef CLOSESTPAIR_H
+#define CLOSESTPAIR_H
+
 #include <vector>
 #include <time.h>
 #include <fstream>
 #include <iostream>
+#include <cmath>
 
 class Point {
 public:
@@ -17,7 +20,6 @@ typedef std::pair<Point, Point> t_points;	// so we can use a pair of points
 
 // Forward decleration
 std::pair<double, t_points> closestPairBrute(const std::vector<Point>& points);
-//std::pair<double, t_points> closestPairDivCon(std::vector<Point> points, std::vector<Point> pointsX, std::vector<Point> pointsY);
 std::pair<double, t_points> closestPairDivCon(std::vector<Point> points);
 std::pair<double, t_points> distBetween(const Point& a, const Point& b);
 
@@ -28,7 +30,7 @@ inline std::vector< std::vector<Point> > partition(std::vector<Point> points, in
 	std::vector<Point> temp2;
 
 	for (size_t i = 0; i < points.size(); i++) {
-		if (points[i].x < mid) {
+		if (points[i].x <= mid) {
 			temp1.push_back(points[i]);
 		} else {
 			temp2.push_back(points[i]);
@@ -70,3 +72,5 @@ inline void clockWrite(clock_t start,
 		<< "point 2: " << pair.second.second.x << "," << pair.second.second.y << "\n"
 		<< "Running time: " << ((double)end - (double)start)/ CLOCKS_PER_SEC<<" seconds" << "\n\n\n";
 }
+
+#endif
